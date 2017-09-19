@@ -43,11 +43,14 @@ def ocds_award(parse):
 
 def ocds_award_record(parse):
     # parse data into respective variables
-    party_data = ocds_party(parse)
-    if len(parse["projects"]) == 0:
-        award_data = "None" # some CIDB entries do not have project
+    party_list = []
+    party_list.append(ocds_party(parse))
+    award_list = []
+    projects = parse["projects"]
+    if len(projects) == 0:
+        award_list.append("None") # some CIDB entries do not have project
     else:
-        award_data = ocds_award(parse["projects"][0]) # only first project
+        award_list.append(ocds_award(projects[0])) # only first project
     ocid = uuid.uuid4().hex
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     # assign data into respective fields
@@ -55,12 +58,12 @@ def ocds_award_record(parse):
         "ocid": ocid,
         "id": ocid + "01-award",
         "date": now,
-        "language":"en",
-        "tag":[ "contract" ], 
-        "initiationType":"Tender",
-        "parties": [ party_data ],
+        "language": "en",
+        "tag": [ "contract" ],
+        "initiationType": "Tender",
+        "parties": party_list,
         "buyer": {},
-        "award":[ award_data ]
+        "award": award_list
     }
     return award_record_data
 
