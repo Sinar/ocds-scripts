@@ -47,10 +47,14 @@ def ocds_award_record(parse):
     party_list.append(ocds_party(parse))
     award_list = []
     projects = parse["projects"]
-    if len(projects) == 0:
-        award_list.append("None") # some CIDB entries do not have project
+    if len(projects) >= 2:
+        for project in projects:
+            award = ocds_award(project)
+            award_list.append(award)
+    elif len(projects) == 1:
+        award_list.append(ocds_award(projects[0])) # only one project
     else:
-        award_list.append(ocds_award(projects[0])) # only first project
+        award_list.append("None")
     ocid = uuid.uuid4().hex
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     # assign data into respective fields
