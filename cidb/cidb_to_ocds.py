@@ -16,8 +16,7 @@ def list_jsonl(spath, blob):
     return name_ls
 
 def ocds_party(parse):
-    entry = parse["Profil"]
-    cidb_id = entry["Nombor Pendaftaran"]
+    cidb_id = parse["Profil"]["Nombor Pendaftaran"]
     cidb_name = parse["name"]
     party_data = {
         "id": cidb_id,
@@ -27,10 +26,9 @@ def ocds_party(parse):
     return party_data 
 
 def ocds_award(parse):
-    entry = parse["projects"][0] # only the first entry in list
-    cidb_project = entry["project"]
-    cidb_date = entry["dates"]
-    cidb_amount = entry["value"].replace(',','') # remove comma
+    cidb_project = parse["project"]
+    cidb_date = parse["dates"]
+    cidb_amount = parse["value"].replace(',','') # remove comma
     award_data = {
         "id": uuid.uuid4().hex,
         "description": cidb_project,
@@ -44,13 +42,15 @@ def ocds_award(parse):
     return award_data
 
 def ocds_award_record(parse):
+    # parse data into respective variables
     party_data = ocds_party(parse)
     if len(parse["projects"]) == 0:
         award_data = "None" # some CIDB entries do not have project
     else:
-        award_data = ocds_award(parse)
+        award_data = ocds_award(parse["projects"][0]) # only first project
     ocid = uuid.uuid4().hex
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+    # assign data into respective fields
     award_record_data = {
         "ocid": ocid,
         "id": ocid + "01-award",
