@@ -73,6 +73,23 @@ def ocds_release(parse):
     }
     return release_data
 
+def ocds_package(parse):
+    # parse data for package metadata
+    now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+    release_list = []
+    release_list.append(ocds_release(parse))
+    # assign data into package fields
+    package_data = {
+        "version": "1.0"
+        "publishedDate": now,
+        "publisher": {
+            "name": "Sinar/ocds-scripts"
+        },
+        "uri": "https://github.com/Sinar/ocds-scripts"
+        "releases": release_list
+    }
+    return package_data
+
 def cidb_to_ocds(path, parse_ls):
     for each_file in parse_ls:
         # retrieve JSONL file in CIDB format
@@ -87,7 +104,7 @@ def cidb_to_ocds(path, parse_ls):
         ocds_file = open(ocds_fpath, 'w')
         for each_obj in cidb_file:
             data = json.loads(each_obj)
-            ocds_data = ocds_release(data)
+            ocds_data = ocds_package(data)
             dump_data = json.dumps(ocds_data)
             ocds_file.write(dump_data + '\n')
         ocds_file.close()
