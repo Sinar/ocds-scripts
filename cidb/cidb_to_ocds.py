@@ -30,10 +30,10 @@ def ocds_award(parse):
     cidb_date = parse["dates"]
     cidb_amount = parse["value"].replace(',','') # remove comma
     award_data = {
-        "id": uuid.uuid4().hex,
-        "description": cidb_project,
-        "status": "complete",
         "date": cidb_date,
+        "description": cidb_project,
+        "id": uuid.uuid4().hex,
+        "status": "complete",
         "value": {
             "amount": float(cidb_amount),
             "currency": "MYR"
@@ -41,7 +41,7 @@ def ocds_award(parse):
     }
     return award_data
 
-def ocds_award_record(parse):
+def ocds_release(parse):
     # parse data into respective variables
     party_list = []
     party_list.append(ocds_party(parse))
@@ -58,18 +58,18 @@ def ocds_award_record(parse):
     ocid = uuid.uuid4().hex
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     # assign data into respective fields
-    award_record_data = {
-        "ocid": ocid,
-        "id": ocid + "01-award",
-        "date": now,
-        "language": "en",
-        "tag": [ "contract" ],
-        "initiationType": "Tender",
-        "parties": party_list,
+    release_data = {
+        "award": award_list,
         "buyer": {},
-        "award": award_list
+        "date": now,
+        "id": ocid + "01-award",
+        "initiationType": "Tender",
+        "language": "en",
+        "ocid": ocid,
+        "parties": party_list,
+        "tag": [ "contract" ]
     }
-    return award_record_data
+    return release_data
 
 def cidb_to_ocds(path, parse_ls):
     for each_file in parse_ls:
@@ -85,7 +85,7 @@ def cidb_to_ocds(path, parse_ls):
         ocds_file = open(ocds_fpath, 'w')
         for each_obj in cidb_file:
             data = json.loads(each_obj)
-            ocds_data = ocds_award_record(data)
+            ocds_data = ocds_release(data)
             dump_data = json.dumps(ocds_data)
             ocds_file.write(dump_data + '\n')
         ocds_file.close()
