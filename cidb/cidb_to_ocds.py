@@ -63,7 +63,7 @@ def ocds_release(parse):
     # assign data into release fields
     release_data = {
         "award": award_list,
-        "buyer": {},
+        "buyer": {}, #FIXME: buyer:name is missing but required
         "date": now,
         "id": ocid + "01-award",
         "initiationType": "tender",
@@ -71,7 +71,7 @@ def ocds_release(parse):
         "ocid": ocid,
         "parties": party_list,
         "tag": ["compiled"],
-        "tender": {}
+        "tender": {} #FIXME: tender:id is missing but required
     }
     return release_data
 
@@ -90,7 +90,6 @@ def ocds_record_releases(parse):
 
 def ocds_record(parse):
     # parse data for each record
-    # parse data for each release
     release_data = ocds_release(parse)
     ocid = release_data["ocid"]
     release_list = []
@@ -143,9 +142,9 @@ def cidb_to_ocds(path, parse_ls):
         for line in cidb_file:
             data = json.loads(line)
             # include additional data in JSON...
-            data["homeURL"] = ocds_url_home
-            data["dataURL"] = ocds_url_data
-            data["fileURL"] = ocds_url_file
+            data["homeURL"] = ocds_url_home # for publisher/uri
+            data["dataURL"] = ocds_url_data # for releases/url
+            data["fileURL"] = ocds_url_file # for uri
             # ...and parse CIDB and additional data together
             ocds_data = ocds_package(data)
             dump_data = json.dumps(ocds_data)
