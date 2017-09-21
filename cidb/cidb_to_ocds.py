@@ -82,7 +82,7 @@ def ocds_package(parse):
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     release_list = []
     release_list.append(ocds_release(parse))
-    uri = "https://github.com/Sinar/ocds-scripts"
+    uri = parse["fileURL"]
     # assign data into package fields
     package_data = {
         "publishedDate": now,
@@ -107,9 +107,18 @@ def cidb_to_ocds(path, parse_ls):
         ocds_fpath = path + '/' + ocds_fname
         print('Write to {}'.format(ocds_fpath))
         ocds_file = open(ocds_fpath, 'w')
+        # prepare addtional data for use in OCDS format
+        ocds_url_home = 'https://github.com/Sinar/ocds-scripts'
+        ocds_url_data = ocds_url_home + '/raw/master/cidb/data'
+        ocds_url_file = ocds_url_data + '/' + ocds_fname
         # convert each line from CIDB to OCDS format
         for line in cidb_file:
             data = json.loads(line)
+            # include additional data in JSON...
+            data["homeURL"] = ocds_url_home
+            data["dataURL"] = ocds_url_data
+            data["fileURL"] = ocds_url_file
+            # ...and parse CIDB and additional data together
             ocds_data = ocds_package(data)
             dump_data = json.dumps(ocds_data)
             ocds_file.write(dump_data + '\n')
