@@ -26,15 +26,15 @@ def ocds_party(parse):
     return party_data
 
 def ocds_award(parse):
-    cidb_project = parse["project"]
     cidb_date = parse["dates"]
+    cidb_title = parse["project"]
     cidb_amount = parse["value"].replace(',', '') # remove comma
     award_data = {
         "date": cidb_date,
         "description": "None",
         "id": uuid.uuid4().hex,
         "status": "complete",
-        "title": cidb_project,
+        "title": cidb_title,
         "value": {
             "amount": float(cidb_amount),
             "currency": "MYR"
