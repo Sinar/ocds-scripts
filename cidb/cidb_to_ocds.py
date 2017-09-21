@@ -23,12 +23,12 @@ def ocds_party(parse):
         "name": cidb_name,
         "role": "supplier"
     }
-    return party_data 
+    return party_data
 
 def ocds_award(parse):
     cidb_project = parse["project"]
     cidb_date = parse["dates"]
-    cidb_amount = parse["value"].replace(',','') # remove comma
+    cidb_amount = parse["value"].replace(',', '') # remove comma
     award_data = {
         "date": cidb_date,
         "description": "None",
@@ -68,7 +68,7 @@ def ocds_release(parse):
         "language": "en",
         "ocid": ocid,
         "parties": party_list,
-        "tag": [ "contract" ],
+        "tag": ["contract"],
         "tender": {}
     }
     return release_data
@@ -102,8 +102,8 @@ def cidb_to_ocds(path, parse_ls):
         ocds_fpath = path + '/' + ocds_fname
         print('Write to {}'.format(ocds_fpath))
         ocds_file = open(ocds_fpath, 'w')
-        for each_obj in cidb_file:
-            data = json.loads(each_obj)
+        for line in cidb_file:
+            data = json.loads(line)
             ocds_data = ocds_package(data)
             dump_data = json.dumps(ocds_data)
             ocds_file.write(dump_data + '\n')
@@ -114,7 +114,10 @@ def main():
     path = './data' # location of files
     blob = 'contractors*.jsonl' # name of files to match
     parse_ls = list_jsonl(path, blob)
-    cidb_to_ocds(path, parse_ls)
+    if len(parse_ls) == 0:
+        print('File not found: {0}/{1}'.format(path, blob))
+    else:
+        cidb_to_ocds(path, parse_ls)
     print('Finish')
 
 if __name__ == '__main__':
