@@ -16,8 +16,10 @@ def list_jsonl(spath, blob):
     return name_ls
 
 def ocds_party(parse):
+    # parse data for parties
     cidb_id = parse["Profil"]["Nombor Pendaftaran"]
     cidb_name = parse["name"]
+    # assign data into parties fields
     party_data = {
         "id": cidb_id,
         "name": cidb_name,
@@ -26,9 +28,11 @@ def ocds_party(parse):
     return party_data
 
 def ocds_award(parse):
+    # parse data for award
     cidb_date = parse["dates"]
     cidb_title = parse["project"]
     cidb_amount = parse["value"].replace(',', '') # remove comma
+    # assign data into award fields
     award_data = {
         "date": cidb_date,
         "description": "None",
@@ -102,6 +106,7 @@ def cidb_to_ocds(path, parse_ls):
         ocds_fpath = path + '/' + ocds_fname
         print('Write to {}'.format(ocds_fpath))
         ocds_file = open(ocds_fpath, 'w')
+        # convert each line from CIDB to OCDS format
         for line in cidb_file:
             data = json.loads(line)
             ocds_data = ocds_package(data)
