@@ -31,9 +31,10 @@ def ocds_award(parse):
     cidb_amount = parse["value"].replace(',','') # remove comma
     award_data = {
         "date": cidb_date,
-        "description": cidb_project,
+        "description": "None",
         "id": uuid.uuid4().hex,
         "status": "complete",
+        "title": cidb_project,
         "value": {
             "amount": float(cidb_amount),
             "currency": "MYR"
@@ -63,11 +64,12 @@ def ocds_release(parse):
         "buyer": {},
         "date": now,
         "id": ocid + "01-award",
-        "initiationType": "Tender",
+        "initiationType": "tender",
         "language": "en",
         "ocid": ocid,
         "parties": party_list,
-        "tag": [ "contract" ]
+        "tag": [ "contract" ],
+        "tender": {}
     }
     return release_data
 
