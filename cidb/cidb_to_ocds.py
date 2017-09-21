@@ -70,7 +70,7 @@ def ocds_release(parse):
         "language": "en",
         "ocid": ocid,
         "parties": party_list,
-        "tag": ["contract"],
+        "tag": ["compiled"],
         "tender": {}
     }
     return release_data
@@ -105,17 +105,20 @@ def ocds_record(parse):
 
 def ocds_package(parse):
     # parse data for package metadata
+    package_list = []
+    package_list.append(parse["dataURL"]) # no files for releases
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-    release_list = []
-    release_list.append(ocds_release(parse))
+    record_list = []
+    record_list.append(ocds_record(parse)) # only one record
     uri = parse["fileURL"]
     # assign data into package fields
     package_data = {
+        "packages": package_list,
         "publishedDate": now,
         "publisher": {
             "name": "Sinar/ocds-scripts"
         },
-        "releases": release_list,
+        "records": record_list,
         "uri": uri,
         "version": "1.0"
     }
