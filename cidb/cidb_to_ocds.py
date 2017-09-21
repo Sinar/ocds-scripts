@@ -43,9 +43,7 @@ def ocds_award(parse):
     return award_data
 
 def ocds_release(parse):
-    # parse data into respective variables
-    party_list = []
-    party_list.append(ocds_party(parse))
+    # parse data for each release
     award_list = []
     projects = parse["projects"]
     if len(projects) >= 2:
@@ -56,9 +54,11 @@ def ocds_release(parse):
         award_list.append(ocds_award(projects[0])) # only one project
     else:
         award_list.append("None")
-    ocid = uuid.uuid4().hex
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-    # assign data into respective fields
+    ocid = uuid.uuid4().hex
+    party_list = []
+    party_list.append(ocds_party(parse))
+    # assign data into release fields
     release_data = {
         "award": award_list,
         "buyer": {},
