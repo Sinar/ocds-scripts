@@ -75,6 +75,34 @@ def ocds_release(parse):
     }
     return release_data
 
+def ocds_record_releases(parse):
+    # parse data for each release in record
+    now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+    tag_list = ["award"] # releases contain only award
+    url_data = parse["dataURL"] # no file for releases
+    # assign data into record releases fields
+    record_releases_data = {
+        "date": now,
+        "tag": tag_list,
+        "url": url_data
+    }
+    return record_releases_data
+
+def ocds_record(parse):
+    # parse data for each record
+    # parse data for each release
+    release_data = ocds_release(parse)
+    ocid = release_data["ocid"]
+    release_list = []
+    release_list.append(ocds_record_releases(parse))
+    # assign data into record fields
+    record_data = {
+        "compiledRelease": release_data,
+        "ocid": ocid,
+        "releases": release_list
+    }
+    return record_data
+
 def ocds_package(parse):
     # parse data for package metadata
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
