@@ -50,12 +50,10 @@ def ocds_release(parse):
     # parse data for each release
     award_list = []
     projects = parse["projects"]
-    if len(projects) >= 2:
+    if len(projects) >= 1:
         for project in projects:
             award = ocds_award(project)
             award_list.append(award)
-    elif len(projects) == 1:
-        award_list.append(ocds_award(projects[0])) # only one project
     else:
         award_list.append("None")
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -96,10 +94,9 @@ def ocds_package(parse):
     return package_data
 
 def cidb_to_ocds(path, parse_ls):
-    for each_file in parse_ls:
+    for fname in parse_ls:
         # retrieve JSONL file in CIDB format
-        fname = each_file # <type 'str'>
-        fpath = path + '/' + each_file
+        fpath = path + '/' + fname
         print('Read from {}'.format(fpath))
         cidb_file = open(fpath, 'r')
         # prepare JSONL file in OCDS format
