@@ -80,12 +80,12 @@ def ocds_package(parse):
     release_list.append(ocds_release(parse))
     # assign data into package fields
     package_data = {
-        "version": "1.0"
+        "version": "1.0",
         "publishedDate": now,
         "publisher": {
             "name": "Sinar/ocds-scripts"
         },
-        "uri": "https://github.com/Sinar/ocds-scripts"
+        "uri": "https://github.com/Sinar/ocds-scripts",
         "releases": release_list
     }
     return package_data
