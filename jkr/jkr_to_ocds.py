@@ -69,7 +69,7 @@ def ocds_release(parse):
         "ocid": ocid,
         "parties": party_list,
         "tag": ["compiled"],
-        "tender": {}
+        "tender": {} # FIXME: 'tender:id' is missing but required
     }
     return release_data
 
