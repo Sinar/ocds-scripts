@@ -35,7 +35,7 @@ def ocds_award(parse):
     # assign data into award fields
     award_data = {
         "date": cidb_date,
-        "description": "None",
+        "description": "none",
         "id": uuid.uuid4().hex,
         "status": "complete",
         "title": cidb_title,
@@ -55,7 +55,7 @@ def ocds_release(parse):
             award = ocds_award(project)
             award_list.append(award)
     else:
-        award_list.append("None")
+        award_list.append("none")
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     ocid = uuid.uuid4().hex
     party_list = []
