@@ -7,14 +7,6 @@ import json
 import uuid
 import datetime
 
-def list_jsonl(spath, blob):
-    name_ls = []
-    for name in os.listdir(spath):
-        if fnmatch.fnmatch(name, blob):
-            name_ls.append(name)
-    name_ls.sort()
-    return name_ls
-
 def ocds_party(parse):
     # parse data for parties
     cidb_id = parse["Profil"]["Nombor Pendaftaran"]
@@ -155,11 +147,15 @@ def cidb_to_ocds(path, parse_ls):
 def main():
     path = './data' # location of files
     blob = 'contractors*.jsonl' # name of files to match
-    parse_ls = list_jsonl(path, blob)
-    if len(parse_ls) == 0:
+    name_ls = []
+    for name in os.listdir(path):
+        if fnmatch.fnmatch(name, blob):
+            name_ls.append(name)
+    name_ls.sort()
+    if len(name_ls) == 0:
         print('File not found: {0}/{1}'.format(path, blob))
     else:
-        cidb_to_ocds(path, parse_ls)
+        cidb_to_ocds(path, name_ls)
     print('Finish')
 
 if __name__ == '__main__':
