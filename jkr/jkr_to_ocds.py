@@ -51,6 +51,7 @@ def ocds_release(parse):
     award_list = []
     award = ocds_award(parse)
     award_list.append(award)
+    buyer_name = parse["offering_office"] # bad string
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     ocid = uuid.uuid4().hex
     party_list = []
@@ -58,7 +59,9 @@ def ocds_release(parse):
     # assign data into release fields
     release_data = {
         "award": award_list,
-        "buyer": {},
+        "buyer": {
+            "name": buyer_name
+        },
         "date": now,
         "id": ocid + "01-award",
         "initiationType": "tender",
