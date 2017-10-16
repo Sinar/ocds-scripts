@@ -1,0 +1,18 @@
+$ ls
+contractors_20150923.jsonl  ocds-contractors_20150923.jsonl
+
+$ split --lines=60000 --numeric-suffixes=01 contractors_20150923.jsonl contractors_20150923.jsonl.
+$ ls contractors_20150923.jsonl.0*
+contractors_20150923.jsonl.01  contractors_20150923.jsonl.03
+contractors_20150923.jsonl.02  contractors_20150923.jsonl.04
+$ cat contractors_20150923.jsonl.* > contractors_20150923.jsonl.all
+$ diff --report-identical-files contractors_20150923.jsonl contractors_20150923.jsonl.all 
+Files contractors_20150923.jsonl and contractors_20150923.jsonl.all are identical
+
+$ split --lines=60000 --numeric-suffixes=01 ocds-contractors_20150923.jsonl ocds-contractors_20150923.jsonl.
+$ ls ocds-contractors_20150923.jsonl.0*
+ocds-contractors_20150923.jsonl.01  ocds-contractors_20150923.jsonl.03
+ocds-contractors_20150923.jsonl.02  ocds-contractors_20150923.jsonl.04
+$ cat ocds-contractors_20150923.jsonl.* > ocds-contractors_20150923.jsonl.all
+$ diff --report-identical-files ocds-contractors_20150923.jsonl ocds-contractors_20150923.jsonl.all 
+Files ocds-contractors_20150923.jsonl and ocds-contractors_20150923.jsonl.all are identical

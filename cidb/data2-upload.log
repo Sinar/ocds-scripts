@@ -14,3 +14,38 @@ remote: error: File cidb/data2/contractors_20150923.jsonl is 340.69 MB; this exc
 To https://github.com/Sinar/ocds-scripts.git
  ! [remote rejected] master -> master (pre-receive hook declined)
 error: failed to push some refs to 'https://github.com/Sinar/ocds-scripts.git'
+
+$ git push origin master 
+Username for 'https://github.com': kmubiin
+Password for 'https://kmubiin@github.com': 
+Counting objects: 10, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 54.88 MiB | 576.00 KiB/s, done.
+Total 8 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 2 local objects.
+remote: warning: GH001: Large files detected. You may want to try Git Large File Storage - https://git-lfs.github.com.
+remote: warning: See http://git.io/iEPt8g for more information.
+remote: warning: File cidb/data2/contractors_20150923.jsonl.04 is 59.18 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB
+remote: warning: File cidb/data2/contractors_20150923.jsonl.01 is 93.82 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB
+remote: warning: File cidb/data2/contractors_20150923.jsonl.02 is 94.22 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB
+remote: warning: File cidb/data2/contractors_20150923.jsonl.03 is 93.46 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB
+To https://github.com/Sinar/ocds-scripts.git
+   288eb88..1ef6094  master -> master
+
+$ git push origin master 
+Username for 'https://github.com': kmubiin
+Password for 'https://kmubiin@github.com': 
+Counting objects: 11, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 45.02 MiB | 477.00 KiB/s, done.
+Total 8 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 2 local objects.
+remote: warning: GH001: Large files detected. You may want to try Git Large File Storage - https://git-lfs.github.com.
+remote: warning: See http://git.io/iEPt8g for more information.
+remote: warning: File cidb/data2/ocds-contractors_20150923.jsonl.01 is 73.95 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB
+remote: warning: File cidb/data2/ocds-contractors_20150923.jsonl.02 is 74.40 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB
+remote: warning: File cidb/data2/ocds-contractors_20150923.jsonl.03 is 73.68 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB
+To https://github.com/Sinar/ocds-scripts.git
+   1ef6094..c7640e6  master -> master
