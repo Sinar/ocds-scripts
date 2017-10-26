@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from __future__ import print_function
+from dateutil import parser
 import os
 import fnmatch
 import json
@@ -15,7 +16,7 @@ def ocds_party(parse):
     party_data = {
         "id": cidb_id,
         "name": cidb_name,
-        "role": "supplier"
+        "roles": ["supplier"]
     }
     return party_data
 
@@ -23,13 +24,16 @@ def ocds_award(parse):
     # parse data for award
     cidb_date = parse["dates"]
     cidb_title = parse["project"]
-    cidb_amount = parse["value"].replace(',', '') # remove comma
+    if len(parse["value"]) == 0:
+        cidb_amount = 0 # zero value if source has empty string
+    else:
+        cidb_amount = parse["value"].replace(',', '') # remove comma
     # assign data into award fields
     award_data = {
-        "date": cidb_date,
+        "date": parser.parse(cidb_date,dayfirst=True).isoformat()+'Z',
         "description": "none",
         "id": uuid.uuid4().hex,
-        "status": "complete",
+        "status": "active",
         "title": cidb_title,
         "value": {
             "amount": float(cidb_amount),
@@ -54,7 +58,7 @@ def ocds_release(parse):
     party_list.append(ocds_party(parse))
     # assign data into release fields
     release_data = {
-        "award": award_list,
+        "awards": award_list,
         "buyer": {}, #FIXME: buyer:name is missing but required
         "date": now,
         "id": ocid + "01-award",
@@ -111,7 +115,7 @@ def ocds_package(parse):
         },
         "records": record_list,
         "uri": uri,
-        "version": "1.0"
+        "version": "1.1"
     }
     return package_data
 
